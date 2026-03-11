@@ -891,7 +891,7 @@ function showResult() {
       <div class="email-capture-sub">Pop your email in and we'll send your brand archetype straight to you. No spam, just your results.</div>
       <div class="email-capture-row">
         <input type="email" class="email-capture-input" id="captureEmail" placeholder="your@email.com">
-        <button class="email-capture-btn" onclick="sendResults('${arch.name}', '${arch.tagline}', '${arch.traits.join(', ')}', '${arch.brands.join(', ')}')">Send me my results</button>
+        <button class="email-capture-btn" onclick="sendResults('${arch.name}', '${arch.tagline}', '${arch.traits.join(', ')}', '${arch.brands.join(', ')}', ${JSON.stringify(arch.insights.map(i => i.text.replace(/<[^>]+>/g, '')))})">Send me my results</button>
       </div>
       <span class="email-capture-skip" onclick="document.getElementById('emailCapture').style.display='none'">No thanks, I'll just view on screen</span>
       <div class="email-capture-success" id="captureSuccess">✅ On its way! Check your inbox shortly.</div>
@@ -938,7 +938,7 @@ updateProgress();
 
 
 
-function sendResults(archetype, tagline, traits, brands) {
+function sendResults(archetype, tagline, traits, brands, insights) {
   var email = document.getElementById('captureEmail').value;
   if (!email || email.indexOf('@') === -1) {
     document.getElementById('captureEmail').style.borderColor = 'var(--red)';
@@ -952,7 +952,11 @@ function sendResults(archetype, tagline, traits, brands) {
     archetype: archetype,
     tagline: tagline,
     traits: traits,
-    brands: brands
+    brands: brands,
+    insight1: insights[0] || '',
+    insight2: insights[1] || '',
+    insight3: insights[2] || '',
+    insight4: insights[3] || ''
   };
 
   // Send to Anja
