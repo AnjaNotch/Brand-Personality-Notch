@@ -968,12 +968,12 @@ function sendResults(archetype, tagline, traits, brands) {
       var skip = document.querySelector('.email-capture-skip');
       if (skip) skip.style.display = 'none';
     })
-    .catch(function() {
+    .catch(function(err) {
       if (submitBtn) submitBtn.textContent = 'Send me my results';
       var successEl = document.getElementById('captureSuccess');
       if (successEl) {
         successEl.style.color = 'var(--red)';
-        successEl.textContent = 'Something went wrong, please try again.';
+        successEl.textContent = 'Error: ' + (err.text || err.message || JSON.stringify(err));
         successEl.classList.add('show');
       }
     });
